@@ -1,0 +1,79 @@
+{
+  "info": {
+    "_postman_id": "b8d4f2e5-7c39-4a01-8d3f-e6b2218ef112",
+    "name": "DSY1107 demo kafka",
+    "description": "Publica pedidos en el topic pedidos. El microservicio escucha en el puerto 8888. La misma clave (cliente) cae siempre en la misma particion.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Pedido de Juan",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"Juan\",\n  \"monto\": 100\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:8888/pedidos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8888",
+          "path": ["pedidos"]
+        },
+        "description": "La clave es Juan. Vuelve a enviarlo: la particion de la consola no cambia y el offset sube."
+      },
+      "response": []
+    },
+    {
+      "name": "Otro pedido de Juan",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"Juan\",\n  \"monto\": 50\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:8888/pedidos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8888",
+          "path": ["pedidos"]
+        },
+        "description": "Misma clave. Misma particion. Offset siguiente."
+      },
+      "response": []
+    },
+    {
+      "name": "Pedido de Maria",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"cliente\": \"Maria\",\n  \"monto\": 80\n}",
+          "options": { "raw": { "language": "json" } }
+        },
+        "url": {
+          "raw": "http://localhost:8888/pedidos",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "8888",
+          "path": ["pedidos"]
+        },
+        "description": "Otra clave. Puede caer en otra particion."
+      },
+      "response": []
+    }
+  ]
+}
